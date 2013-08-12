@@ -64,6 +64,7 @@ suites_but = set((
         'de la Russie',
         'de célibataires avec exigence',
         'à -10.0000000000000.00000000%%% de réduction',
+        'digital',
     ))
 avec = set((
         'grâce à web',
@@ -76,7 +77,22 @@ avec = set((
         'et 10000000.0.0.000000000000000.0.0..0.0....0000....000%€ des gagnants (+ les perdants!!!) ont gagné',
     ))
 
+def encoder(var):
+    if isinstance(var, str):
+        return var.encode()
+    elif isinstance(var, tuple):
+        return tuple(encoder(x) for x in var)
+    else:
+        return var
+
+for (name, var) in list(locals().items()):
+    if not isinstance(var, set):
+        continue
+    locals()[name] = set(encoder(x) for x in var)
+
 import random
+
+SEP = b' '
 
 def construire(one=False):
     phrases = set()
@@ -93,12 +109,12 @@ def construire_sans_sujet(one):
         for suite in construire_suite_verbe(one):
             if one:
                 if random.randint(0, 1):
-                    return set([verbe_sing + ' ' + suite])
+                    return set([verbe_sing + SEP + suite])
                 else:
-                    return set([verbe_plur + ' ' + suite])
+                    return set([verbe_plur + SEP + suite])
             else:
-                phrases.add(verbe_sing + ' ' + suite)
-                phrases.add(verbe_plur + ' ' + suite)
+                phrases.add(verbe_sing + SEP + suite)
+                phrases.add(verbe_plur + SEP + suite)
     return phrases
 
 def construire_avec_sujet(one):
@@ -107,13 +123,13 @@ def construire_avec_sujet(one):
         for (verbe_sing, verbe_plur) in construire_verbe_et_modal(verbes_avec_sujet, one):
             for suite in construire_suite_verbe(one):
                 if sujet_plur:
-                    debut = sujet_plur + ' ' + verbe_plur
+                    debut = sujet_plur + SEP + verbe_plur
                 else:
-                    debut = sujet_sing + ' ' + verbe_sing
+                    debut = sujet_sing + SEP + verbe_sing
                 if one:
-                    return set([debut + ' ' + suite])
+                    return set([debut + SEP + suite])
                 else:
-                    phrases.add(debut + ' ' + suite)
+                    phrases.add(debut + SEP + suite)
     return phrases
 
 def construire_modaux(one):
@@ -133,14 +149,14 @@ def construire_verbe_et_modal(verbes, one):
     for (verbe_sing, verbe_plur, transitif) in verbes:
         phrases.add((verbe_sing, verbe_plur))
         for modal in construire_modaux(one):
-            modal = ' ' + modal if modal else ''
+            modal = SEP + modal if modal else b''
             phrases.add((verbe_sing + modal, verbe_plur + modal))
         if transitif:
             for COD in CODs:
-                phrases.add((verbe_sing + ' ' + COD, verbe_plur + ' ' + COD))
+                phrases.add((verbe_sing + SEP + COD, verbe_plur + SEP + COD))
                 for modal in construire_modaux(one):
-                    modal = ' ' + modal if modal else ''
-                    phrases.add((verbe_sing + modal + ' ' + COD, verbe_plur + modal + ' ' + COD))
+                    modal = SEP + modal if modal else b''
+                    phrases.add((verbe_sing + modal + SEP + COD, verbe_plur + modal + SEP + COD))
         if one:
             return phrases
     return phrases
@@ -151,21 +167,23 @@ def construire_suite_verbe(one):
         for but in buts:
             for suite_but in suites_but:
                 for avec_ in avec:
-                    phrases.add((compl_temps + ' ' if compl_temps else '') +
-                                but + ' ' + suite_but +
-                                (' ' + avec_ if avec_ else ''))
+                    phrases.add((compl_temps + SEP if compl_temps else b'') +
+                                but + SEP + suite_but +
+                                (SEP + avec_ if avec_ else ''))
                     if one:
                         return phrases
     return phrases
 
 if __name__ == '__main__':
     import sys
-    format_ = lambda x:x.upper()+' '+('!'*random.randint(1, 9))
+    format_ = lambda x:x.decode().upper()+' '+('!'*random.randint(1, 9))
     if '--one' in sys.argv:
         print(list(map(format_, construire(one=True)))[0])
     else:
         try:
-            print('\n'.join(map(format_, construire())))
+            phrases = construire()
+            while phrases:
+                print(format_(phrases.pop()))
         except KeyboardInterrupt:
             print('')
             exit()
