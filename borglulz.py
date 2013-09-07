@@ -2,10 +2,11 @@
 
 verbes_sans_sujet = set((
 #        Singulier                  Pluriel                     Accepte COD
-        ('cliquez',                 'cliquez',                  True),
-        ('gagnez',                  'gagnez',                   True),
+        ('clique',                  'cliquez',                  True),
+        ('gagne',                   'gagnez',                   True),
         ('prévoir',                 'prévoir',                  True),
         ('acheter',                 'acheter',                  True),
+        ('envoie « le paypal » par sms', 'envoyez « le paypal » par sms', False),
         ('voyagez',                 'voyagez',                  False),
     ))
 CODs = set((
@@ -22,12 +23,13 @@ sujets = set((
 #        Singulier                  Pluriel
         ('le cheminement de fer',   'les cheminement de fer'),
         ('le RFC',                  'les RFC',),
+        ('assurance tous risques',  'assurances tous risques'),
+        ('index de l’or du diamant',None),
         ('Blogzmeyer',              None),
     ))
 verbes_avec_sujet = set((
 #        Singulier                  Pluriel                     Accepte COD
         ('est',                     'sont',                     False),
-        ('balaye',                  'balayent',                 True),
     ))
 modaux = set((
 #        Modal                      Accepte "petits caractères"
@@ -57,6 +59,8 @@ buts = set((
         'pour réseau élite',
         'pour retruiter une personne',
         'pour transfert d’héritage',
+        'pour vacances de plage',
+        'pour recevoir modèle poésie romantisme',
     ))
 suites_but = set((
         'de les internet',
@@ -65,16 +69,17 @@ suites_but = set((
         'de célibataires avec exigence',
         'à -10.0000000000000.00000000%%% de réduction',
         'digital',
+        'sur lieu de paradis fiscal',
     ))
 avec = set((
         'grâce à web',
         'grâce à hacker chinois corrompu',
         'avec livraison sur VPN',
         'en collaborant avec socialisme de nation',
-        'avec docteur du mollusque',
         'avec partenariat AMD/ATI',
         'dans votre région France (Toulouse)',
         'et 10000000.0.0.000000000000000.0.0..0.0....0000....000%€ des gagnants (+ les perdants!!!) ont gagné',
+        'c’est richesse exubérance garantie',
     ))
 
 def encoder(var):
