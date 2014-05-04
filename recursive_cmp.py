@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+CHECK_CONTENT = False
+
 import os
 import sys
 import subprocess
@@ -17,15 +19,19 @@ def compare_dirs(dir1, dir2):
         compare(join(dir1, filename), join(dir2, filename))
 
 def compare_files(f1, f2):
-    subprocess.call(['cmp', f1, f2])
+    if CHECK_CONTENT:
+        subprocess.call(['cmp', f1, f2])
 
 def compare(dir1, dir2):
     if os.path.isdir(dir1) and os.path.isdir(dir2):
         return compare_dirs(dir1, dir2)
     elif os.path.isfile(dir1) and os.path.isfile(dir2):
         return compare_files(dir1, dir2)
+    elif not os.path.isdir(dir1) and not os.path.isfile(dir1) and \
+            not os.path.isdir(dir2) and not os.path.isfile(dir2):
+        print('Skipping “%s” and “%s”: neither file or dir.' % (dir1, dir2))
     else:
-        print('“%s” and “%s” are not the same type (dir/file).' % dir1, dir2)
+        print('“%s” and “%s” are not the same type (dir/file).' % (dir1, dir2))
 
 if __name__ == '__main__':
     if len(sys.argv) != 3:
