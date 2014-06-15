@@ -1,0 +1,5 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =3
+let g:netrw_dirhist_1='/home/progval/ecriture/ProgVal.net'
+let g:netrw_dirhist_2='/home/progval/ecriture/ProgVal.net/games'
+let g:netrw_dirhist_3='/home/progval/.vim'
