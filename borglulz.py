@@ -96,6 +96,7 @@ for (name, var) in list(locals().items()):
     locals()[name] = set(encoder(x) for x in var)
 
 import random
+random.seed()
 
 SEP = b' '
 
