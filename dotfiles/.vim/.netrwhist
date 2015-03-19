@@ -1,0 +1,11 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =9
+let g:netrw_dirhist_1='/home/progval/cuisine/recettes'
+let g:netrw_dirhist_2='/home/progval/etudes/ens/image/tp2'
+let g:netrw_dirhist_3='/home/progval/irc/Supybot-plugins/Bitoduc'
+let g:netrw_dirhist_4='/home/progval/etudes/ens/ppp/python/ppp_datamodel/utils'
+let g:netrw_dirhist_5='/home/progval/etudes/ens/ppp/modules/DatamodelNotationParser/tests'
+let g:netrw_dirhist_6='/home/progval/etudes/ens/ppp/python/tests'
+let g:netrw_dirhist_7='/home/progval/etudes/ens/ppp/modules/ml/src/com/ppp'
+let g:netrw_dirhist_8='/home/progval/etudes/ens/optim/deraillex/src/parsers'
+let g:netrw_dirhist_9='/home/progval/traductions/plongez-dans-python3'
