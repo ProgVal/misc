@@ -19,6 +19,9 @@ autocmd BufReadPost *
 map <M-Left> gT
 map <M-Right> gt
 
+" Fix coloring for LaTeX
+autocmd BufEnter *.tex :syntax sync fromstart
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
 " VimOrganizer
