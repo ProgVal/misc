@@ -1,0 +1,29 @@
+#!/usr/bin/env python3
+
+import re
+import sys
+import subprocess
+
+args = ['latex', '-halt-on-error'] + sys.argv[1:]
+
+try:
+    output = subprocess.check_output(args)
+except subprocess.CalledProcessError as e:
+    output = e.output
+    return_code = e.returncode
+else:
+    return_code = 0
+
+# Garbage
+output = re.sub(b'\n\([^)]*\)', b'', output)
+# algorithm2e
+output = re.sub(b"\**\nPackage .algorithm2e'.*(\n[^*]*)*\n\**\n", b'', output,
+        re.MULTILINE ^ re.DOTALL)
+
+for line in output.split(b'\n'):
+    if b'/usr/share' in line:
+        continue
+    sys.stdout.buffer.write(line)
+    sys.stdout.buffer.write(b'\n')
+
+exit(return_code)
