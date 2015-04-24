@@ -22,7 +22,7 @@ else:
     return_code = 0
 
 # Garbage
-output = re.sub(b'\n\([^)]*\)', b'', output)
+output = re.sub(b'\n\([^)]*\) *(?= )', b'', output)
 # algorithm2e
 output = re.sub(b"\**\nPackage .algorithm2e'.*(\n[^*]*)*\n\**\n", b'', output,
         re.MULTILINE ^ re.DOTALL)
