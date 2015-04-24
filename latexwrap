@@ -29,7 +29,7 @@ output = re.sub(b"\**\nPackage .algorithm2e'.*(\n[^*]*)*\n\**\n", b'', output,
 
 WARNING = re.compile('^(Package (?P<package>[^ ]*)|LaTeX (?P<latextype>[^ ]*)) Warning: (?P<message>.*)$')
 
-for line in output.split(b'\n\n', 1)[1].split(b'\n'):
+for line in output.split(b'\n\n', 1)[-1].split(b'\n'):
     if b'/usr/share' in line:
         continue
     if line.endswith(b')))))'):
