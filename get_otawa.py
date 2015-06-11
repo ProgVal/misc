@@ -25,13 +25,6 @@ for module in modules:
       'https://anon:ok@wwwsecu.irit.fr/hg/TRACES/%s/trunk' % module,
       module],
       stdout=subprocess.DEVNULL)
-"""
-print('Downloading lp_solve5')
-subprocess.call(['wget', 'http://downloads.sourceforge.net/project/lpsolve/lpsolve/5.5.2.0/lp_solve_5.5.2.0_source.tar.gz', '-c'], stdout=subprocess.DEVNULL)
-subprocess.call(['tar', 'xzf', 'lp_solve_5.5.2.0_source.tar.gz'])
-shutil.rmtree('lp_solve5', ignore_errors=True)
-os.rename('lp_solve_5.5', 'lp_solve5')
-"""
 
 # gliss2
 subprocess.call(['make', '-C', 'gliss2/'])
@@ -54,29 +47,12 @@ build_with_cmake('gel')
 # elm
 build_with_cmake('elm')
 
-# lp_solve5
-# local install does not work for me
-"""
-os.chdir('lp_solve5/lpsolve55')
-print('Compiling lpsolve')
-subprocess.call(['sh', 'ccc'])
-os.chdir('../../')
-shutil.copyfile('lp_solve5/lpsolve55/bin/ux64/liblpsolve55.so',
-    'lp_solve5/lpsolve55/liblpsolve55.so')
-shutil.copyfile('lp_solve5/lpsolve55/bin/ux64/liblpsolve55.a',
-    'lp_solve5/lpsolve55/liblpsolve55.a')
-"""
-
 # otawa
 subprocess.call(['wget', 'http://www.irit.fr/bugzilla/attachment.cgi?id=56',
     '-O', 'cmakelists_lpsolve.diff', '-c'])
 with open('cmakelists_lpsolve.diff') as fd:
     subprocess.call(['patch', 'otawa/CMakeLists.txt'], stdin=fd)
 build_with_cmake('otawa')
-
-## fix local lpsolve install
-#shutil.copyfile(PREFIX + '/lib/otawa/ilp/lp_solve5.so',
-#    PREFIX + '/lib/liblpsolve55.so')
 
 # frontc
 subprocess.call(['make', '-C', 'frontc/'])
