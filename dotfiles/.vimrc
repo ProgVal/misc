@@ -20,7 +20,7 @@ map <M-Left> gT
 map <M-Right> gt
 
 " Fix coloring for LaTeX
-autocmd BufEnter *.tex :syntax sync fromstart
+"autocmd BufEnter *.tex :syntax sync fromstart
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -38,3 +38,18 @@ let g:org_agenda_files = split(glob("~/org_files/*.org"),"\n")
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Coq
 command Coq CoqIDESetMap
+
+autocmd BufRead,BufNewFile /home/progval/ens/stageM1/* :setlocal ts=2 sw=2 tabstop=2 shiftwidth=2 softtabstop=2
+autocmd BufRead,BufNewFile /home/progval/ens/stageM1/otawa/* :setlocal ts=8 sw=8 tabstop=8 shiftwidth=8 softtabstop=8
+autocmd BufRead,BufNewFile /home/progval/ens/stageM1/*.py :setlocal ts=4 sw=4 tabstop=4 shiftwidth=4 softtabstop=4
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" vim-latexsuite
+set grepprg=grep\ -nH\ $*
+let g:tex_flavor='latex'
+let Tex_FoldedSections=""
+let Tex_FoldedEnvironments=""
+let Tex_FoldedMisc=""
+" Don't disable é
+" http://vim-latex.sourceforge.net/index.php?subject=faq&title=FAQ#faq-e-acute
+imap <buffer> <leader>it <Plug>Tex_InsertItemOnThisLine
